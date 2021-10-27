@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import ProductDisplay from "./ProductDisplay";
 import CartDisplay from "./CartDisplay";
+import useCart from "../../hooks/useCart";
 
 const products = [
     {pno:1, pname:'샤프', price:3000},
@@ -14,17 +15,14 @@ const cart=[]
 
 const KioskContainer = () =>{
 
-    const [cartState, setCartState] = useState(cart)
-
-    const addCart = (product)=>{
-        console.log("addCart....", product)
-        setCartState([...cartState, product])
-    }
+   const {cart, addProduct, removeProduct,getTotal,clearCart,changeQty} = useCart()
 
     return(
         <div>
-            <ProductDisplay products={products} addCart={addCart}></ProductDisplay>
-            <CartDisplay cart={cartState}></CartDisplay>
+            <div>
+                <button onClick={(()=>clearCart())}>Clear</button></div>
+            <ProductDisplay products={products} addCart={addProduct}></ProductDisplay>
+            <CartDisplay cart={cart} remove={removeProduct} getTotal={getTotal} changeQty={changeQty}></CartDisplay>
         </div>
     )
 }
